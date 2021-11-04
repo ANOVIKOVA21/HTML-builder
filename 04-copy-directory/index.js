@@ -12,8 +12,15 @@ function copyDir() {
                     if (err) throw err;
                 })
             });
+            fs.readdir(way, (err, copies) => {
+                if (err) throw err;
+                copies.forEach(copy => {
+                    if (files.indexOf(copy) === -1) {
+                        fs.unlink(way + '/' + copy, (err) => { if (err) throw err })
+                    }
+                });
+            });
         });
-        console.log('Directory created successfully');
-    })
+    });
 }
 copyDir()
