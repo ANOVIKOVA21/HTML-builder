@@ -8,7 +8,7 @@ stdout.write('Enter some text\n');
 stdin.on('data', data => {
     const str = data.toString();
     if (str.trim() === 'exit') {
-        stdout.write('Goodbye');
+        stdout.write('Goodbye\n');
         process.exit();
     }
     output.write(str)

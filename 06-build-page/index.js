@@ -50,12 +50,13 @@ fs.readFile(wayToTemplate, 'utf8', (err, data) => {
     let templateStrs = data.match(/{{.+}}/g)
     let tags = []
     templateStrs.forEach(str => tags.push(str.match(/\w/g).join('')))
-    fs.readdir(wayToComponents, (err, files) => {
+    fs.readdir(wayToComponents, { withFileTypes: true }, (err, files) => {
         if (err) throw err;
-        const htmlArr = files.filter(file => path.extname(wayToComponents + '/' + file) === '.html')
+        const fileArr = files.filter(file => file.isFile())
+        const htmlArr = fileArr.filter(file => path.extname(wayToComponents + '/' + file.name) === '.html')
         htmlArr.forEach(file => {
-            const fileName = file.slice(0, file.indexOf('.'))
-            fs.readFile(wayToComponents + '/' + file, 'utf8', (err, component) => {
+            const fileName = file.name.slice(0, file.name.indexOf('.'))
+            fs.readFile(wayToComponents + '/' + file.name, 'utf8', (err, component) => {
                 if (err) throw err;
                 const fileIndex = tags.indexOf(fileName)
                 if (fileIndex !== -1) {
