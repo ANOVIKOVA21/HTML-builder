@@ -47,7 +47,7 @@ function copyDir(src, way) {
 
 fs.readFile(wayToTemplate, 'utf8', (err, data) => {
     if (err) throw err;
-    let templateStrs = data.match(/{{.+}}/g)
+    let templateStrs = data.match(/{{.+?}}/g)
     let tags = []
     templateStrs.forEach(str => tags.push(str.match(/\w/g).join('')))
     fs.readdir(wayToComponents, { withFileTypes: true }, (err, files) => {
